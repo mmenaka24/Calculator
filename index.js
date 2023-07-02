@@ -32,7 +32,9 @@ if (operator == "+" || operator == "plus" || operator == "add" || operator == "a
 
 //ask how many numbers
 console.log('How many numbers do you want to ' + operation + '?');
-const iterations = readline.prompt();
+const iterationsString = readline.prompt();
+//convert to number rather than string
+const iterations = +iterationsString
 
 //create an empty array in which to put the numbers
 let arr = Array(iterations)
@@ -75,4 +77,4 @@ for (let i = 1; i < iterations; i++) {
 }
 
 //finally, print the answer
-console.log('The answer is ' + answer);
+console.log('\nThe answer is ' + answer);
