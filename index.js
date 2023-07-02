@@ -4,6 +4,7 @@ console.log('Please enter some input:');
 const response = readline.prompt();
 
 const no1 = parseFloat(response); //turns response from string into number
+//could instead use 'no1 = +response'
 
 console.log('What would you like to multiply by?:');
 const multiplier = readline.prompt();
