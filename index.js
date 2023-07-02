@@ -56,14 +56,8 @@ switch (operation) {
         answer = no1 / no2;
         break;
     default:
-        console.log('Sorry, something seems to have gone wrong. Try again?')
+        console.log('Sorry, something seems to have gone wrong. Try again?');
 }
 
 //finally, print the answer
-console.log('The answer is ' + answer)
-
-
-
-
-
-
+console.log('The answer is ' + answer);
