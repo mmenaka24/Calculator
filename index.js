@@ -12,13 +12,13 @@ const operator = readline.prompt();
 let operation;
 
 if (operator == "+" || operator == "plus" || operator == "add" || operator == "addition" || operator == "sum") {
-    operation = "addition";
+    operation = "add";
 } else if (operator == "-" || operator == "minus" || operator == "subtract" || operator == "subtraction" || operator == "difference") {
-    operation = "subtraction";
+    operation = "subtract";
 } else if (operator == "*" || operator == "x" || operator == "." || operator == "multiply" || operator == "multiplication" || operator == "product") {
-    operation = "multiplication";
+    operation = "multiply";
 } else if (operator == "/" || operator == "divide" || operator == "division" || operator == "quotient") {
-    operation = "division";
+    operation = "divide";
 } else {
     console.log('Sorry, that is not a valid operator.');
     console.log('\nThis calculator can perform the following operations:');
@@ -30,33 +30,48 @@ if (operator == "+" || operator == "plus" || operator == "add" || operator == "a
     process.exit(0);
 }
 
-//now get the two numbers
-console.log('Please enter the first number:');
-const input1 = readline.prompt();
-console.log('Please enter the second number');
-const input2 = readline.prompt();
+//ask how many numbers
+console.log('How many numbers do you want to ' + operation + '?');
+const iterations = readline.prompt();
 
-//now convert these to numbers rather than strings
-const no1 = +input1
-const no2 = +input2
+//create an empty array in which to put the numbers
+let arr = Array(iterations)
 
-//now perform the relevant operation, again declare the answer variable beforehand
-let answer;
-switch (operation) {
-    case "addition":
-        answer = no1 + no2;
-        break;
-    case "subtraction":
-        answer = no1 - no2;
-        break;
-    case "multiplication":
-        answer = no1 * no2;
-        break;
-    case "division":
-        answer = no1 / no2;
-        break;
-    default:
-        console.log('Sorry, something seems to have gone wrong. Try again?');
+//now get the numbers
+for (let i = 0; i < iterations; i++) {
+    let j = i+1
+    console.log('Please enter number ' + j + ':');
+    let number = readline.prompt();
+    //convert to number rather than string
+    arr[i] = +number;
+}
+
+//line of code to clarify numbers and operation
+console.log('Your numbers are ' + arr + ' and you want to ' + operation + ' them...');
+
+//now perform the relevant operation
+//first we let answer be just the first number, then perform the operations
+let answer = arr[0]
+//here we let i=1 rather than 0 to call the 2nd, 3rd, etc... element of arr
+//the condition is still i < iterations
+//as if there are 2 numbers then one operation is applied, 3 numbers 2 operations, etc...
+for (let i = 1; i < iterations; i++) {
+    switch (operation) {
+        case "add":
+            answer = answer + arr[i];
+            break;
+        case "subtract":
+            answer = answer - arr[i];
+            break;
+        case "multiply":
+            answer = answer * arr[i];
+            break;
+        case "divide":
+            answer = answer / arr[i];
+            break;
+        default:
+            console.log('Sorry, something seems to have gone wrong. Try again?');
+    }
 }
 
 //finally, print the answer
