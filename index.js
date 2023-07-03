@@ -39,21 +39,15 @@ function performOneCalculation() {
     }
 
     //ask how many numbers
+    takeUserInputConvert('How many numbers do you want to ' + operation + '?', iterationsString, iterations)
     console.log('How many numbers do you want to ' + operation + '?');
-    const iterationsString = readline.prompt();
-    //convert to number rather than string
-    const iterations = +iterationsString
 
     //create an empty array in which to put the numbers
     let arr = Array(iterations)
 
     //now get the numbers
     for (let i = 0; i < iterations; i++) {
-        let j = i+1
-        console.log('Please enter number ' + j + ':');
-        let number = readline.prompt();
-        //convert to number rather than string
-        arr[i] = +number;
+        takeUserInputConvert('Please enter number ' + (i+1) + ':', number, arr[i])
     }
 
     //line of code to clarify numbers and operation
@@ -86,4 +80,10 @@ function performOneCalculation() {
 
     //finally, print the answer
     console.log('\nThe answer is ' + answer);
+}
+
+function takeUserInputConvert(String, inputString, input) {
+    console.log(String);
+    const inputString = readline.prompt();
+    const input = +inputString;
 }
