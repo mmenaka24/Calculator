@@ -2,7 +2,10 @@ const readline = require('readline-sync');
 //functions are defined at the bottom of the code
 
 printWelcomeMessage();
-performOneCalculation();
+let running = 1;
+while (running == 1) {
+    performOneCalculation();
+}
 
 function printWelcomeMessage() {
     console.log('Welcome to the calculator!');
@@ -26,7 +29,7 @@ function performOneCalculation() {
 
     /* now perform the relevant operation
     first we let answer be just the first number, then perform the operations */
-    let answer = arr[0]
+    let answer = arr[0];
     /* here we let i=1 rather than 0 to call the 2nd, 3rd, etc... element of arr
     the condition is still i < iterations
     as if there are 2 numbers then one operation is applied, 3 numbers 2 operations, etc... */
@@ -51,6 +54,10 @@ function performOneCalculation() {
 
     //finally, print the answer
     console.log('\nThe answer is ' + answer);
+    //ask whether user wants to perform another calculation
+    console.log("\nWould you like to perform another calculation?");
+    const response = readline.prompt();
+    running = convertYNresponse(response);
 }
 
 function takeUserInputConvert(String) {
@@ -82,9 +89,27 @@ function setOperationAndCheckValidity(operator) {
 }
 
 function createArrayOfNumbers(iterations) {
-    let arr = Array(iterations)
+    let arr = Array(iterations);
     for (let i = 0; i < iterations; i++) {
-        arr[i] = takeUserInputConvert('Please enter number ' + (i+1) + ':')
+        let again = 0
+        do {
+            const maybeNumber = takeUserInputConvert('Please enter number ' + (i+1) + ':');
+            if (isNaN(maybeNumber)) {
+                console.log("This is not a number, please try again")
+                again = 1
+            } else {
+                arr[i] = maybeNumber
+                again = 0
+            }
+        } while (again == 1);
     }
-    return arr
+    return arr;
+}
+
+function convertYNresponse(response) {
+    if (response == "y" || response == "yes" || response == "yes please") {
+        return 1;
+    } else {
+        return 0;
+    }
 }
