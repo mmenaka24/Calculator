@@ -55,7 +55,7 @@ function performOneArithmeticCalculation() {
     /* here we let i=1 rather than 0 to call the 2nd, 3rd, etc... element of arr
     the condition is still i < iterations
     as if there are 2 numbers then one operation is applied, 3 numbers 2 operations, etc... */
-    for (let i = 1; i < iterations; i++) {
+    for (const i in iterations) {
         switch (operation) {
             case "add":
                 answer += arr[i];
@@ -113,7 +113,7 @@ function takeUserInputConvert(String) {
 
 function createArrayOfNumbers(iterations) {
     let arr = Array(iterations);
-    for (let i = 0; i < iterations; i++) {
+    for (const i in iterations) {
         let again = false;
         do {
             const maybeNumber = takeUserInputConvert(`Please enter number ${i+1}:`);
