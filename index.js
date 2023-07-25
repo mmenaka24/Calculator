@@ -21,12 +21,11 @@ function printWelcomeMessage() {
 }
 
 function getCalculationMode() {
-    console.log(`Which calculator mode do you want?
-     1)  Arithmetic
-     2)  Vowel counting`);
-    const inputString = readline.prompt();
-    if ( inputString === '1' || '2' ) {
-        return inputString;
+    const response = getStringInputWithPrompt(`Which calculator mode do you want?
+    ${ARITHMETIC_MODE})  Arithmetic
+    ${VOWEL_COUNTING_MODE})  Vowel counting`);
+    if ( response === '1' || '2' ) {
+        return response;
     } else {
         console.log(`Sorry, that is not a valid calculator mode.
         Please enter an integer from 1 to 2...`);
@@ -34,14 +33,18 @@ function getCalculationMode() {
     }
 }
 
+function getStringInputWithPrompt(prompt) {
+    console.log(`\n${prompt}`);
+    return readline.prompt;
+}
+
 function performOneArithmeticCalculation() {
     //first get operator and check that it is valid
-    console.log('\nPlease enter the operator:');
-    const operator = readline.prompt();
+    const operator = getStringInputWithPrompt('Please enter the operator:');
     let operation = setOperationAndCheckValidity(operator);
 
     //ask how many numbers
-    const iterations = takeUserInputConvert(`How many numbers do you want to ${operation}?`);
+    const iterations = getNumberInputWithPrompt(`How many numbers do you want to ${operation}?`);
 
     //now get the numbers
     const arr = createArrayOfNumbers(iterations);
@@ -104,11 +107,14 @@ function setOperationAndCheckValidity(operator) {
     }
 }
 
-function takeUserInputConvert(String) {
-    console.log(String);
-    const inputString = readline.prompt();
-    const input = +inputString;
-    return input;
+function getNumberInputWithPrompt(prompt) {
+    const response = +getStringInputWithPrompt(prompt);
+    if (isNaN(response)) {
+        console.log('This is not a number, please try again');
+        getNumberInputWithPrompt(prompt);
+    } else {
+        return response;
+    }
 }
 
 function createArrayOfNumbers(iterations) {
@@ -116,7 +122,7 @@ function createArrayOfNumbers(iterations) {
     for (const i in iterations) {
         let again = false;
         do {
-            const maybeNumber = takeUserInputConvert(`Please enter number ${i+1}:`);
+            const maybeNumber = getNumberInputWithPrompt(`Please enter number ${i+1}:`);
             if (isNaN(maybeNumber)) {
                 console.log('This is not a number, please try again');
                 again = true;
@@ -130,8 +136,7 @@ function createArrayOfNumbers(iterations) {
 }
 
 function shouldCalculatorKeepRunning() {
-    console.log('\nWould you like to perform another calculation?');
-    const response = readline.prompt();
+    const response = getStringInputWithPrompt('Would you like to perform another calculation?');
     return convertYNresponse(response);
 }
 
@@ -144,8 +149,7 @@ function convertYNresponse(response) {
 }
 
 function performOneVowelCountingCalculation() {
-    console.log('\nPlease enter a string:');
-    const stringToCount = readline.prompt('Please enter a string').toUpperCase();
+    const stringToCount = getStringInputWithPrompt('Please enter a string:').toUpperCase();
 
     const vowelArray = ['A', 'E', 'I', 'O', 'U'];
 
@@ -165,10 +169,9 @@ function countLettersInString(lettersToCount, stringToCount) {
         letterCounter[lettersToCount[i]] = 0
     }
 
-    for (let step = 0; step < stringToCount.length; step++) {
-        const letter = stringToCount.charAt(step+1);
-        if (lettersToCount.includes(letter)) {
-            letterCounter[letter]++;
+    for (let char of stringToCount) {
+        if (lettersToCount.includes(char)) {
+            letterCounter[char]++;
         }
     }
 
