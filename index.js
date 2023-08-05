@@ -24,18 +24,18 @@ function getCalculationMode() {
     const response = getStringInputWithPrompt(`Which calculator mode do you want?
     ${ARITHMETIC_MODE})  Arithmetic
     ${VOWEL_COUNTING_MODE})  Vowel counting`);
-    if ( response === '1' || '2' ) {
+    if ( response === '1' || response === '2' ) {
         return response;
     } else {
         console.log(`Sorry, that is not a valid calculator mode.
         Please enter an integer from 1 to 2...`);
-        getCalculationMode();
+        return getCalculationMode();
     }
 }
 
 function getStringInputWithPrompt(prompt) {
     console.log(`\n${prompt}`);
-    return readline.prompt;
+    return readline.prompt();
 }
 
 function performOneArithmeticCalculation() {
@@ -58,7 +58,7 @@ function performOneArithmeticCalculation() {
     /* here we let i=1 rather than 0 to call the 2nd, 3rd, etc... element of arr
     the condition is still i < iterations
     as if there are 2 numbers then one operation is applied, 3 numbers 2 operations, etc... */
-    for (const i in iterations) {
+    for (const i of iterations) {
         switch (operation) {
             case "add":
                 answer += arr[i];
@@ -111,7 +111,7 @@ function getNumberInputWithPrompt(prompt) {
     const response = +getStringInputWithPrompt(prompt);
     if (isNaN(response)) {
         console.log('This is not a number, please try again');
-        getNumberInputWithPrompt(prompt);
+        return getNumberInputWithPrompt(prompt);
     } else {
         return response;
     }
@@ -119,7 +119,7 @@ function getNumberInputWithPrompt(prompt) {
 
 function createArrayOfNumbers(iterations) {
     let arr = Array(iterations);
-    for (const i in iterations) {
+    for (const i of iterations) {
         let again = false;
         do {
             const maybeNumber = getNumberInputWithPrompt(`Please enter number ${i+1}:`);
