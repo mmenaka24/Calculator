@@ -1,7 +1,6 @@
 const userInput = require('./userInput');
 const arithmetic = require('./arithmetic');
 const vowelCounting = require('./vowelCounting');
-//functions are defined at the bottom of the code
 
 userInput.printWelcomeMessage();
 let running = true;

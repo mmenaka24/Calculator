@@ -50,35 +50,37 @@ exports.performOneArithmeticCalculation = function() {
     const iterations = userInput.getNumberInputWithPrompt(`How many numbers do you want to ${operation}?`);
 
     //now get the numbers
-    const arr = createArrayOfNumbers(iterations);
+    let arr = createArrayOfNumbers(iterations);
 
     //line of code to clarify numbers and operation
     console.log(`Your numbers are ${arr} and you want to ${operation} them...`);
 
-    /* now perform the relevant operation
-    first we let answer be just the first number, then perform the operations */
-    let answer = arr[0];
-    /* here we let i=1 rather than 0 to call the 2nd, 3rd, etc... element of arr
-    the condition is still i < iterations
-    as if there are 2 numbers then one operation is applied, 3 numbers 2 operations, etc... */
-    for (const i of arr) {
-        switch (operation) {
-            case "add":
-                answer += i;
-                break;
-            case "subtract":
-                answer -= i;
-                break;
-            case "multiply":
-                answer *= i;
-                break;
-            case "divide":
-                answer /= i;
-                break;
-            default:
-                console.log('Sorry, something seems to have gone wrong. Try again?');
-        }
+    //remove zeros from array if dividing
+    if (operation === "divide") {
+        const firstElement = arr[0];
+        arr = [firstElement].concat(arr.slice(1).filter((number) => number !== 0));
     }
+
+    console.log(arr);
+
+    //now perform the relevant operation
+
+    const answer = arr.reduce(
+        (accumulator, currentValue) => {
+            switch (operation) {
+                case "add":
+                    return (accumulator + currentValue);
+                case "subtract":
+                    return (accumulator - currentValue);
+                case "multiply":
+                    return (accumulator * currentValue);
+                case "divide":
+                    return (accumulator / currentValue);
+                default:
+                    console.log('Sorry, something seems to have gone wrong. Try again?');
+            }
+        }
+    );
 
     //finally, print the answer
     console.log(`
